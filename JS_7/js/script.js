@@ -7,14 +7,14 @@ var Clothes = function (size, color, sex, name, price) {
     this.color = color || 'stock';
     this.sex = sex || 'unisex';
     Product.call(this, name, price);
-    arrProducts.push(this);
+    if (validateProduct(this)) {arrProducts.push(this)}
 };
 
 var Electronics = function (type, model, name, price) {
     this.type = type || 'used everywhere';
     this.model = model || 'basic';
     Product.call(this, name, price);
-    arrProducts.push(this);
+    if (validateProduct(this)) {arrProducts.push(this)}
 };
 
 var Food = function (expirationDate, type, name, price) {
@@ -39,7 +39,7 @@ Food.prototype.constructor = Food;
 Electronics.prototype.constructor = Electronics;
 Clothes.prototype.constructor = Clothes;
 
-/* ✅ написать методы для вывода наименования товара в формате "Товар: [наименование], цена: [цена]"*/
+/* ✅ написать метод для вывода наименования товара в формате "Товар: [наименование], цена: [цена]"*/
 
 var getData = function (name) {
     for (var i = 0; i , arrProducts.length; i++) {
@@ -50,7 +50,7 @@ var getData = function (name) {
     return console.log('Такого товара нет в списке!');
 };
 
-/* ✅ написать методы для валидации всех свойств товаров */
+/* ✅ написать метод для валидации всех свойств товаров */
 
 var validateProduct = function (product){
   for(var key in product){
@@ -62,17 +62,23 @@ var validateProduct = function (product){
     return true;
 };
 
-/* ✅ написать методы для вывода всех свойств товара в виде html таблицы (представьте что пишете для вывода
+/* ✅ написать метод для вывода всех свойств товара в виде html таблицы (представьте что пишете для вывода
  на страницу товара) */
 
+function output (product){
+    document.write('<table class="table"><caption>' + product.name + '</caption>');
+    for (var key in product){
+        if( key == 'constructor'){
+            return false;
+        }
+        document.write('<tr><td>' + key + '</td><td>' + product[key] + '</td></tr>');
+    }
+}
 
-
-/* ✅ напишите еще 2 класса наследника от электроники и проверьте как работают унаследованные методы в новых классах.
- если работают некорректно то переписать методы так, чтобы работали правильно при создании новых классов наследников.*/
-
-var milk = new Food('3 day', 'mlik', 20);
-//var milk = new Food('3 day', 'mlik', 'smile', 20);
-//var shirt = new Clothes('L', 'black', 'men', 'sport', 120);
-//var tv = new Electronics('big', "32'", 'LG', 20);
+var milk = new Food('3 day', 'mlik', 'milk', 20);
+var milk = new Food('3 day', 'mlik', 'smile', 20);
+var shirt = new Clothes('L', 'black', 'men', 'sport', 120);
+var tv = new Electronics('big', "32'", 'LG', 20);
 console.log(arrProducts);
 //getData('LG');
+output(arrProducts[0]);
